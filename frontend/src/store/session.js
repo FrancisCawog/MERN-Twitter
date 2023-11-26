@@ -9,7 +9,7 @@ const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
   currentUser
 });
-  
+
 const receiveErrors = errors => ({
   type: RECEIVE_SESSION_ERRORS,
   errors
@@ -44,26 +44,15 @@ const startSession = (userInfo, route) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-    localStorage.removeItem('jwtToken');
-    dispatch(logoutUser());
-  };
+  localStorage.removeItem('jwtToken');
+  dispatch(logoutUser());
+};
 
-  const initialState = {
-    user: undefined
-  };
-  
-  const sessionReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case RECEIVE_CURRENT_USER:
-        return { user: action.currentUser };
-      case RECEIVE_USER_LOGOUT:
-        return initialState;
-      default:
-        return state;
-    }
-  };
+const initialState = {
+  user: undefined
+};
 
-  const nullErrors = null;
+const nullErrors = null;
 
 export const sessionErrorsReducer = (state = nullErrors, action) => {
   switch(action.type) {
@@ -77,5 +66,15 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-  
-  export default sessionReducer;
+const sessionReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case RECEIVE_CURRENT_USER:
+      return { user: action.currentUser };
+    case RECEIVE_USER_LOGOUT:
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+export default sessionReducer;
